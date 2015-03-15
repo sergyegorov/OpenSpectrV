@@ -41,4 +41,10 @@ public class StandardCSV extends CSV{
         fl = new File(fl.getAbsolutePath()+File.separator+localName);
         return new StandardCSV(fl);
     }
+    
+    public static void create(String localName) throws Exception{
+        File fl = getBaseFolder();
+        fl = new File(fl.getAbsolutePath()+File.separator+localName);
+        fl.createNewFile();
+    }
 }

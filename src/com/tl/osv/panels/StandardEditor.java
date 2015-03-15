@@ -8,8 +8,12 @@ package com.tl.osv.panels;
 import com.tl.osv.AbstractPanel;
 import com.tl.osv.Log;
 import com.tl.osv.Mls;
+import com.tl.osv.OSMain;
 import com.tl.osv.analit.StandardCSV;
+import java.io.FileNotFoundException;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,6 +27,7 @@ public class StandardEditor extends AbstractPanel  {
     public StandardEditor() {
         super("#StandardEditod");
         initComponents();
+        tableCont.setModel(new DefaultTableModel());
     }
 
     /**
@@ -39,11 +44,19 @@ public class StandardEditor extends AbstractPanel  {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listCSV = new javax.swing.JList();
+        buttonNewCSV = new javax.swing.JButton();
+        buttonDelete = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        labelPrevView = new javax.swing.JLabel();
+        tableCont = new javax.swing.JTable();
+        buttonNewColumn = new javax.swing.JButton();
+        buttonNewRow = new javax.swing.JButton();
+        checkBoxReadOnly = new javax.swing.JCheckBox();
+        buttonRemoveElement = new javax.swing.JButton();
+        buttonRemoveRow = new javax.swing.JButton();
+        buttonSave = new javax.swing.JButton();
 
-        jLabel1.setText("Standard list");
+        jLabel1.setText("#Standard list");
 
         listCSV.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -57,39 +70,131 @@ public class StandardEditor extends AbstractPanel  {
         });
         jScrollPane1.setViewportView(listCSV);
 
+        buttonNewCSV.setText("#New");
+        buttonNewCSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonNewCSVActionPerformed(evt);
+            }
+        });
+
+        buttonDelete.setText("#Delete");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addComponent(buttonNewCSV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(buttonDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonNewCSV)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonDelete))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
 
-        labelPrevView.setText("<html>test</html>");
-        labelPrevView.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jScrollPane2.setViewportView(labelPrevView);
+        tableCont.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableCont.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tableCont.setCellSelectionEnabled(true);
+        jScrollPane2.setViewportView(tableCont);
+
+        buttonNewColumn.setText("#NewElement");
+        buttonNewColumn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonNewColumnActionPerformed(evt);
+            }
+        });
+
+        buttonNewRow.setText("#NewProb");
+        buttonNewRow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonNewRowActionPerformed(evt);
+            }
+        });
+
+        checkBoxReadOnly.setSelected(true);
+        checkBoxReadOnly.setText("#Read Only");
+        checkBoxReadOnly.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkBoxReadOnlyItemStateChanged(evt);
+            }
+        });
+
+        buttonRemoveElement.setText("#RemoveElement");
+        buttonRemoveElement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRemoveElementActionPerformed(evt);
+            }
+        });
+
+        buttonRemoveRow.setText("#RemoveProb");
+        buttonRemoveRow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRemoveRowActionPerformed(evt);
+            }
+        });
+
+        buttonSave.setText("Save");
+        buttonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(buttonRemoveElement)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonRemoveRow)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(checkBoxReadOnly))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(buttonNewColumn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonNewRow)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonSave))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonNewColumn)
+                    .addComponent(buttonNewRow)
+                    .addComponent(buttonSave))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(checkBoxReadOnly)
+                    .addComponent(buttonRemoveElement)
+                    .addComponent(buttonRemoveRow)))
         );
 
         jSplitPane1.setRightComponent(jPanel2);
@@ -106,50 +211,183 @@ public class StandardEditor extends AbstractPanel  {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    StandardCSV selected;
     private void listCSVValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listCSVValueChanged
         try{
+            checkIsModified();
             String value = (String)listCSV.getSelectedValue();
             if(value != null){
-                StandardCSV selected = StandardCSV.get(value);
-                labelPrevView.setText(selected.toString());
-            } else
-                labelPrevView.setText(Mls.translate("#NoSelection"));
+                selected = StandardCSV.get(value);
+                tableCont.setModel(selected);
+            } else {
+                tableCont.setModel(new DefaultTableModel());
+                selected = null;
+            }
         }catch(Exception ex){
             Log.exception(ex);
         }
     }//GEN-LAST:event_listCSVValueChanged
 
+    private void buttonNewCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewCSVActionPerformed
+        try{
+            String name = javax.swing.JOptionPane.showInputDialog(OSMain.Main, 
+                    Mls.translate("#EnterProbSetNane"), 
+                    Mls.translate("#CreateProbSet"), JOptionPane.QUESTION_MESSAGE);
+            if(name == null)
+                return;
+            if(name.endsWith(".csv") == false)
+                name += ".csv";
+            StandardCSV.create(name);
+            initList();
+            listCSV.setSelectedValue(name, true);
+        }catch(Exception ex){
+            Log.exception(ex);
+        }
+    }//GEN-LAST:event_buttonNewCSVActionPerformed
+
+    private void checkBoxReadOnlyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxReadOnlyItemStateChanged
+        try{
+            if(selected != null)
+                selected.setEditable(!checkBoxReadOnly.isSelected());
+        }catch(Exception ex){
+            Log.exception(ex);
+        }
+    }//GEN-LAST:event_checkBoxReadOnlyItemStateChanged
+
+    private void buttonNewColumnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewColumnActionPerformed
+        try{
+            if(selected == null || checkBoxReadOnly.isSelected())
+                return;
+            String name = javax.swing.JOptionPane.showInputDialog(OSMain.Main, 
+                    Mls.translate("#EnterNewElementName"), 
+                    Mls.translate("#CreateNewElement"), JOptionPane.QUESTION_MESSAGE);
+            if(name == null)
+                return;
+            selected.addColumn(name);
+        }catch(Exception ex){
+            Log.exception(ex);
+        }
+    }//GEN-LAST:event_buttonNewColumnActionPerformed
+
+    private void buttonNewRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewRowActionPerformed
+        try{
+            if(selected == null || checkBoxReadOnly.isSelected())
+                return;
+            String name = javax.swing.JOptionPane.showInputDialog(OSMain.Main, 
+                    Mls.translate("#EnterNewProbName"), 
+                    Mls.translate("#CreateNewProb"), JOptionPane.QUESTION_MESSAGE);
+            if(name == null)
+                return;
+            String[] row = new String[selected.getColumnCount()+1];
+            row[0] = name;
+            for(int i = 1;i<row.length;i++)
+                row[i] = "";
+            selected.addRow(row);
+        }catch(Exception ex){
+            Log.exception(ex);
+        }
+    }//GEN-LAST:event_buttonNewRowActionPerformed
+
+    private void buttonRemoveElementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoveElementActionPerformed
+        try{
+            if(selected == null)
+                return;
+            int col = tableCont.getSelectedColumn();
+            int option = JOptionPane.showConfirmDialog(OSMain.Main, 
+                    Mls.translate("#RemoveElement%s?",selected.getColumnName(col)), 
+                    Mls.translate("#RemoveElement"), 
+                    JOptionPane.YES_NO_OPTION);
+            if(option == JOptionPane.YES_OPTION){
+                tableCont.removeColumn(tableCont.getColumnModel().getColumn(col));
+                selected.modified();
+            }
+        }catch(Exception ex){
+            Log.exception(ex);
+        }
+    }//GEN-LAST:event_buttonRemoveElementActionPerformed
+
+    private void buttonRemoveRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoveRowActionPerformed
+        try{
+            if(selected == null)
+                return;
+            int row = tableCont.getSelectedRow();
+            int option = JOptionPane.showConfirmDialog(OSMain.Main, 
+                    Mls.translate("#RemoveElement%s?",(String)selected.getValueAt(row, 0)), 
+                    Mls.translate("#RemoveElement"), 
+                    JOptionPane.YES_NO_OPTION);
+            if(option == JOptionPane.YES_OPTION)
+                selected.removeRow(row);
+        }catch(Exception ex){
+            Log.exception(ex);
+        }
+    }//GEN-LAST:event_buttonRemoveRowActionPerformed
+
+    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+        try{
+            if(selected == null)
+                return;
+            selected.commit();
+        }catch(Exception ex){
+            Log.exception(ex);
+        }
+    }//GEN-LAST:event_buttonSaveActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonDelete;
+    private javax.swing.JButton buttonNewCSV;
+    private javax.swing.JButton buttonNewColumn;
+    private javax.swing.JButton buttonNewRow;
+    private javax.swing.JButton buttonRemoveElement;
+    private javax.swing.JButton buttonRemoveRow;
+    private javax.swing.JButton buttonSave;
+    private javax.swing.JCheckBox checkBoxReadOnly;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JLabel labelPrevView;
     private javax.swing.JList listCSV;
+    private javax.swing.JTable tableCont;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void closeOnExit() throws Exception {
+        checkIsModified();
     }
 
-    @Override
-    protected void init() throws Exception {
+    void initList() throws Exception{
         String[] list = StandardCSV.getList();
         DefaultListModel<String> model = new DefaultListModel<>();
         for(String el : list)
             model.addElement(el);
         listCSV.setModel(model);
     }
+    
+    @Override
+    protected void init() throws Exception {
+        initList();
+    }
 
     @Override
     public void showed() {
     }
 
+    void checkIsModified() throws FileNotFoundException{
+        if(selected != null && selected.isModefied()){
+            int option = JOptionPane.showConfirmDialog(OSMain.Main, 
+                    Mls.translate("#ValueChangedSaveIt"), 
+                    Mls.translate("#CreateNewProb"), 
+                    JOptionPane.YES_NO_OPTION);
+            if(option == JOptionPane.YES_OPTION)
+                selected.commit();
+        }
+    }
+    
     @Override
     public boolean hiding() throws Exception {
+        checkIsModified();
         return true;
     }
 }
