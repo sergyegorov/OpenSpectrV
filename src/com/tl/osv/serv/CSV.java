@@ -15,8 +15,9 @@ import java.nio.file.Paths;
  */
 public abstract class CSV {
     String[][] values;
+    String txt;
     public CSV(File fl) throws Exception{
-        String txt = new String(Files.readAllBytes(Paths.get(fl.getAbsolutePath())));
+        txt = new String(Files.readAllBytes(Paths.get(fl.getAbsolutePath())));
         String rows[] = txt.split("\n");
         values = new String[rows.length][];
         for(int row = 0;row<rows.length;row++){
@@ -26,6 +27,8 @@ public abstract class CSV {
                 this.values[row][col] = checkFormat(fields[col]);
             }
         }
+        txt = "<html>"+txt+"<html>";
+        txt = txt.replaceAll("\n", "<p>");
     }
     
     public abstract String checkFormat(String cond);
@@ -52,6 +55,6 @@ public abstract class CSV {
     
     @Override
     public String toString(){
-        return "Irishka to do...";
+        return txt;
     }
 }
