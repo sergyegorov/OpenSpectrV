@@ -38,7 +38,7 @@ public class StandardCSV extends CSV{
     
     public static StandardCSV get(String localName) throws Exception{
         File fl = getBaseFolder();
-        fl = new File(fl.getAbsolutePath()+localName);
+        fl = new File(fl.getAbsolutePath()+File.separator+localName);
         return new StandardCSV(fl);
     }
 }
