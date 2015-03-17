@@ -19,6 +19,25 @@ import java.io.FileInputStream;
 import java.lang.reflect.Constructor;
 
 public class StreamTools {
+    public static final void saveClass(File fl,Class classToSave) throws Exception{
+        try(FileOutputStream fos = new FileOutputStream(fl);
+            DataOutputStream dos = new DataOutputStream(fos);){
+            versionBlockBegin(dos, 1);
+            writeString(classToSave.getName(), dos);
+            versionBlockEnd(dos);
+        }
+    }
+    
+    public static final Class loadClass(File fl) throws Exception{
+        try(FileInputStream fis = new FileInputStream(fl);
+            DataInputStream dis = new DataInputStream(fis);){
+            versionBlockBegin(dis, 1, 1);
+            String name = readString(dis);
+            versionBlockEnd(dis);
+            return Class.forName(name);
+        }
+    }
+    
     public static final StorableInterface loadStorable(File fl) throws Exception{
         FileInputStream fis = new FileInputStream(fl);
         DataInputStream dis = new DataInputStream(fis);

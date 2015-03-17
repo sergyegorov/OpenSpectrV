@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tl.osv.dev;
+package com.tl.osv.analit.method;
+
+import java.io.File;
 
 /**
  *
  * @author root
  */
-public abstract class AbstractMethodMeasuring {
-    
+public interface AbstractMethodFactory {
+    AbstractMethod getInstance(File baseFolder) throws Exception;
 }

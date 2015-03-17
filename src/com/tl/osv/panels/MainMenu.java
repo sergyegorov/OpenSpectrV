@@ -8,9 +8,10 @@ package com.tl.osv.panels;
 import com.tl.osv.AbstractPanel;
 import com.tl.osv.Common;
 import com.tl.osv.Log;
-import com.tl.osv.Mls;
 import com.tl.osv.OSMain;
+import com.tl.osv.analit.method.MLSimpleCalibrMethod;
 import com.tl.osv.serv.GuiDecorator;
+import java.io.File;
 
 /**
  *
@@ -30,6 +31,9 @@ public class MainMenu extends AbstractPanel {
         GuiDecorator.decorateMainMenu(buttonStandardLibrary,"mm_stlib");
     }
 
+    public String getDataFolder(String name) throws Exception{
+        return Common.getDataDirectory(name)+File.separator;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,6 +71,11 @@ public class MainMenu extends AbstractPanel {
         panelMenu.add(buttonMeasuringByMethod);
 
         buttonMethodEditor.setText("#MethodEditor");
+        buttonMethodEditor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonMethodEditorActionPerformed(evt);
+            }
+        });
         panelMenu.add(buttonMethodEditor);
 
         buttonStandardLibrary.setText("#StandardLibrary");
@@ -100,19 +109,22 @@ public class MainMenu extends AbstractPanel {
     private void buttonMeasuringUnknownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMeasuringUnknownActionPerformed
         try{
             if(unknownMeasuring == null)
-                unknownMeasuring = new MeasuringUnknown("#Measuring unknown","unknown");
+                unknownMeasuring = new MeasuringUnknown("#Measuring unknown",
+                        getDataFolder("unknown"));
             OSMain.Main.getPanelDriver().show(unknownMeasuring);
         }catch(Exception ex){
             Log.exception(ex);
         }
     }//GEN-LAST:event_buttonMeasuringUnknownActionPerformed
 
-    MeasuringUnknown knownMeasuring;
+    FolderList knownMeasurings;
     private void buttonMeasuringByMethodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMeasuringByMethodActionPerformed
         try{
-            if(knownMeasuring == null)
-                knownMeasuring = new MeasuringUnknown("#Measuring by calibrating","known");
-            OSMain.Main.getPanelDriver().show(knownMeasuring);
+            if(knownMeasurings == null)
+                knownMeasurings = new FolderList("#Measuring by calibrating",
+                        getDataFolder("knowns"),
+                        false, (File baseFolder) -> new MLSimpleCalibrMethod(baseFolder));
+            OSMain.Main.getPanelDriver().show(knownMeasurings);
         }catch(Exception ex){
             Log.exception(ex);
         }
@@ -128,6 +140,19 @@ public class MainMenu extends AbstractPanel {
             Log.exception(ex);
         }
     }//GEN-LAST:event_buttonStandardLibraryActionPerformed
+
+    FolderList knownMethods;
+    private void buttonMethodEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMethodEditorActionPerformed
+        try{
+            if(knownMethods == null)
+                knownMethods = new FolderList("#Calibratings",
+                        getDataFolder("calibrs"),true,
+                (File baseFolder) -> new MLSimpleCalibrMethod(baseFolder));
+            OSMain.Main.getPanelDriver().show(knownMethods);
+        }catch(Exception ex){
+            Log.exception(ex);
+        }
+    }//GEN-LAST:event_buttonMethodEditorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

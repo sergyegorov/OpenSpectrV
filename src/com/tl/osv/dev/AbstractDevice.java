@@ -5,6 +5,7 @@
  */
 package com.tl.osv.dev;
 
+import com.tl.osv.analit.method.AbstractMethod;
 import com.tl.osv.analit.LambdaFk;
 import java.io.File;
 
@@ -26,6 +27,6 @@ public abstract class AbstractDevice {
     abstract public void afterMeasuring() throws Exception;
     abstract public LambdaFk getDefaultLy();
     
-    abstract public AbstractMethod createCalibrMethod();
-    abstract public AbstractMethod createSortMethod();
+    abstract public AbstractMethod createCalibrMethod(File folder) throws Exception;
+    abstract public AbstractMethod createSortMethod(File folder) throws Exception;
 }

@@ -9,8 +9,8 @@ package com.tl.osv.panels;
  *
  * @author root
  */
-public class MeasuringUnknown extends AbstractMeasuring{
-    public MeasuringUnknown(String name, String directory) throws Exception {
+public class Calibrating extends MeasuringUnknown{
+    public Calibrating(String name, String directory) throws Exception {
         super(name, directory);
     }
 }

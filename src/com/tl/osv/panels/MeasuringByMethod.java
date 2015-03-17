@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tl.osv.dev;
+package com.tl.osv.panels;
 
 /**
  *
  * @author root
  */
-public abstract class AbstractMethodCalibr {
+public class MeasuringByMethod extends AbstractMeasuring{
+    public MeasuringByMethod(String name, String directory) throws Exception {
+        super(name, directory);
+    }
 }

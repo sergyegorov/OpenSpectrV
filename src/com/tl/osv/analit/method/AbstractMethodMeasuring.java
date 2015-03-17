@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tl.osv.panels;
+package com.tl.osv.analit.method;
 
 /**
  *
  * @author root
  */
-public class MeasuringUnknown extends AbstractMeasuring{
-    public MeasuringUnknown(String name, String directory) throws Exception {
-        super(name, directory);
-    }
+public abstract class AbstractMethodMeasuring {
+    
 }

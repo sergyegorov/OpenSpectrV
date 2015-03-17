@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tl.osv.dev;
+package com.tl.osv.util;
 
 /**
  *
  * @author root
  */
-public abstract class AbstractMethod {
-    abstract public AbstractMethodCalibr getCalibr();
-    abstract public AbstractMethodMeasuring getMeasuring();
+public interface Factory {
+    Object getInstance();
 }

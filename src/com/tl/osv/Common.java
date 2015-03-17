@@ -10,6 +10,7 @@ import com.tl.osv.dev.AbstractDevice;
 import com.tl.osv.dev.DeviceDataBase;
 import com.tl.osv.panels.Setup;
 import java.io.File;
+import java.nio.charset.Charset;
 
 /**
  *
@@ -20,6 +21,8 @@ public class Common {
     public static final int UserLevelMethodist = 2;
     public static final int UserLevelAdmin = 3;
     public static int userLevel = UserLevelAdmin;
+    
+    public static final Charset DefaultTextChaset = Charset.forName("UTF-8");
     
     static String startDir;
     static String dataDir;

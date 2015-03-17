@@ -9,7 +9,8 @@ import com.tl.osv.Common;
 import com.tl.osv.analit.LambdaFk;
 import com.tl.osv.dev.AbstractDevice;
 import com.tl.osv.dev.AbstractMeasuringProgram;
-import com.tl.osv.dev.AbstractMethod;
+import com.tl.osv.analit.method.AbstractMethod;
+import com.tl.osv.analit.method.MLSimpleCalibrMethod;
 import com.tl.osv.dev.ProbMeasuring;
 import com.tl.osv.dev.mline.MLineMeasuringProgram;
 import com.tl.osv.dev.mline.MLineMeasuringProgramState;
@@ -52,12 +53,12 @@ public abstract class MLDevice extends AbstractDevice {
     }
 
     @Override
-    public AbstractMethod createCalibrMethod() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public AbstractMethod createCalibrMethod(File folder) throws Exception {
+        return new MLSimpleCalibrMethod(folder);
     }
 
     @Override
-    public AbstractMethod createSortMethod() {
+    public AbstractMethod createSortMethod(File folder) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
